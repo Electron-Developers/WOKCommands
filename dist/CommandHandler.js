@@ -35,12 +35,10 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
-var __spreadArrays = (this && this.__spreadArrays) || function () {
-    for (var s = 0, i = 0, il = arguments.length; i < il; i++) s += arguments[i].length;
-    for (var r = Array(s), k = 0, i = 0; i < il; i++)
-        for (var a = arguments[i], j = 0, jl = a.length; j < jl; j++, k++)
-            r[k] = a[j];
-    return r;
+var __spreadArray = (this && this.__spreadArray) || function (to, from) {
+    for (var i = 0, il = from.length, j = to.length; i < il; i++, j++)
+        to[j] = from[i];
+    return to;
 };
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
@@ -86,6 +84,9 @@ var CommandHandler = /** @class */ (function () {
                 var content = message.content;
                 var prefix = instance.getPrefix(guild);
                 if (!content.startsWith(prefix)) {
+                    return;
+                }
+                if (instance.ignoreBots && message.author.bot) {
                     return;
                 }
                 // Remove the prefix
@@ -370,7 +371,7 @@ var CommandHandler = /** @class */ (function () {
                             for (_i = 0, _b = requiredPermissions || permissions; _i < _b.length; _i++) {
                                 perm = _b[_i];
                                 if (!permissions_1.permissionList.includes(perm)) {
-                                    throw new Error("Command located at \"" + file + "\" has an invalid permission node: \"" + perm + "\". Permissions must be all upper case and be one of the following: \"" + __spreadArrays(permissions_1.permissionList).join('", "') + "\"");
+                                    throw new Error("Command located at \"" + file + "\" has an invalid permission node: \"" + perm + "\". Permissions must be all upper case and be one of the following: \"" + __spreadArray([], permissions_1.permissionList).join('", "') + "\"");
                                 }
                             }
                         }
@@ -457,7 +458,7 @@ var CommandHandler = /** @class */ (function () {
                 var names = _a.names, _b = _a.category, category = _b === void 0 ? '' : _b, _c = _a.description, description = _c === void 0 ? '' : _c, _d = _a.expectedArgs, expectedArgs = _d === void 0 ? '' : _d, _e = _a.hidden, hidden = _e === void 0 ? false : _e, _f = _a.testOnly, testOnly = _f === void 0 ? false : _f;
                 if (!added.includes(names[0])) {
                     results.push({
-                        names: __spreadArrays(names),
+                        names: __spreadArray([], names),
                         category: category,
                         description: description,
                         syntax: expectedArgs,

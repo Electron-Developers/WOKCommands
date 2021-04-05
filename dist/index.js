@@ -3,10 +3,12 @@ var __extends = (this && this.__extends) || (function () {
     var extendStatics = function (d, b) {
         extendStatics = Object.setPrototypeOf ||
             ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+            function (d, b) { for (var p in b) if (Object.prototype.hasOwnProperty.call(b, p)) d[p] = b[p]; };
         return extendStatics(d, b);
     };
     return function (d, b) {
+        if (typeof b !== "function" && b !== null)
+            throw new TypeError("Class extends value " + String(b) + " is not a constructor or null");
         extendStatics(d, b);
         function __() { this.constructor = d; }
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
@@ -27,7 +29,7 @@ var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (
 var __importStar = (this && this.__importStar) || function (mod) {
     if (mod && mod.__esModule) return mod;
     var result = {};
-    if (mod != null) for (var k in mod) if (k !== "default" && Object.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
+    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
     __setModuleDefault(result, mod);
     return result;
 };
@@ -96,6 +98,7 @@ var WOKCommands = /** @class */ (function (_super) {
         _this._tagPeople = true;
         _this._showWarns = true;
         _this._del = -1;
+        _this._ignoreBots = true;
         _this._botOwner = [];
         _this._testServers = [];
         _this._defaultLanguage = 'english';
@@ -103,7 +106,7 @@ var WOKCommands = /** @class */ (function (_super) {
             throw new Error('No Discord JS Client provided as first argument!');
         }
         _this._client = client;
-        var _a = options.commandsDir, commandsDir = _a === void 0 ? '' : _a, _b = options.commandDir, commandDir = _b === void 0 ? '' : _b, _c = options.featuresDir, featuresDir = _c === void 0 ? '' : _c, _d = options.featureDir, featureDir = _d === void 0 ? '' : _d, messagesPath = options.messagesPath, _e = options.showWarns, showWarns = _e === void 0 ? true : _e, _f = options.del, del = _f === void 0 ? -1 : _f, dbOptions = options.dbOptions, testServers = options.testServers, _g = options.disabledDefaultCommands, disabledDefaultCommands = _g === void 0 ? [] : _g;
+        var _a = options.commandsDir, commandsDir = _a === void 0 ? '' : _a, _b = options.commandDir, commandDir = _b === void 0 ? '' : _b, _c = options.featuresDir, featuresDir = _c === void 0 ? '' : _c, _d = options.featureDir, featureDir = _d === void 0 ? '' : _d, messagesPath = options.messagesPath, _e = options.showWarns, showWarns = _e === void 0 ? true : _e, _f = options.del, del = _f === void 0 ? -1 : _f, _g = options.ignoreBots, ignoreBots = _g === void 0 ? true : _g, dbOptions = options.dbOptions, testServers = options.testServers, _h = options.disabledDefaultCommands, disabledDefaultCommands = _h === void 0 ? [] : _h;
         var partials = client.options.partials;
         _this._commandsDir = commandsDir || commandDir || _this._commandsDir;
         _this._featuresDir = featuresDir || featureDir || _this._featuresDir;
@@ -139,6 +142,7 @@ var WOKCommands = /** @class */ (function (_super) {
         }
         _this._showWarns = showWarns;
         _this._del = del;
+        _this._ignoreBots = ignoreBots;
         if (typeof disabledDefaultCommands === 'string') {
             disabledDefaultCommands = [disabledDefaultCommands];
         }
@@ -375,6 +379,13 @@ var WOKCommands = /** @class */ (function (_super) {
     Object.defineProperty(WOKCommands.prototype, "del", {
         get: function () {
             return this._del;
+        },
+        enumerable: false,
+        configurable: true
+    });
+    Object.defineProperty(WOKCommands.prototype, "ignoreBots", {
+        get: function () {
+            return this._ignoreBots;
         },
         enumerable: false,
         configurable: true
