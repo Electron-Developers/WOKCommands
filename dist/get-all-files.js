@@ -18,7 +18,7 @@ var getAllFiles = function (dir) {
         if (file.isDirectory()) {
             jsFiles = __spreadArray(__spreadArray([], jsFiles), getAllFiles(dir + "/" + file.name));
         }
-        else if ((file.name.endsWith('.js') || file.name.endsWith('.js')) && !file.name.startsWith('!')) {
+        else if ((file.name.endsWith('.js') || file.name.endsWith('.ts')) && !file.name.startsWith('!')) {
             var fileName = file.name.replace(/\\/g, '/').split('/');
             fileName = fileName[fileName.length - 1];
             fileName = fileName.split('.')[0].toLowerCase();
